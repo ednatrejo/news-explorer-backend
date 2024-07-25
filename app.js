@@ -1,36 +1,36 @@
-require("dotenv").config();
+require('dotenv').config();
 
-const express = require("express");
-const mongoose = require("mongoose");
-const cors = require("cors");
-const helmet = require("helmet");
-const { errors } = require("celebrate");
-const errorHandler = require("./middlewares/error-handler");
-const { requestLogger, errorLogger } = require("./middlewares/logger");
-const { limiter } = require("./utils/limiter");
-const { MONGO_DB_CONNECTION } = require("./utils/config");
+const express = require('express');
+const mongoose = require('mongoose');
+const cors = require('cors');
+const helmet = require('helmet');
+const { errors } = require('celebrate');
+const errorHandler = require('./middlewares/error-handler');
+const { requestLogger, errorLogger } = require('./middlewares/logger');
+const { limiter } = require('./utils/limiter');
+const { MONGO_DB_CONNECTION } = require('./utils/config');
 
 const { PORT = 3001 } = process.env;
 
 const app = express();
 app.use(cors());
 
-mongoose.set("strictQuery", true);
+mongoose.set('strictQuery', true);
 mongoose.connect(
   MONGO_DB_CONNECTION,
   (r) => {
-    console.log("connected to DB", r);
+    console.log('connected to DB', r);
   },
-  (e) => console.log("DB connection error", e),
+  (e) => console.log('DB connection error', e),
 );
 
-app.get("/crash-test", () => {
+app.get('/crash-test', () => {
   setTimeout(() => {
-    throw new Error("Server will crash now");
+    throw new Error('Server will crash now');
   }, 0);
 });
 
-const routes = require("./routes");
+const routes = require('./routes');
 
 app.use(helmet());
 app.use(limiter);

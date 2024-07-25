@@ -1,24 +1,24 @@
-const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
-const { JWT_SECRET, NODE_ENV } = require("../utils/config");
-const User = require("../models/user");
-const InvalidError = require("../utils/errors/InvalidError");
-const NotFoundError = require("../utils/errors/NotFound");
-const ConflictError = require("../utils/errors/ConflictError");
-const UnauthorizedError = require("../utils/errors/UnauthorizedError");
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+const { JWT_SECRET, NODE_ENV } = require('../utils/config');
+const User = require('../models/user');
+const InvalidError = require('../utils/errors/InvalidError');
+const NotFoundError = require('../utils/errors/NotFound');
+const ConflictError = require('../utils/errors/ConflictError');
+const UnauthorizedError = require('../utils/errors/UnauthorizedError');
 const {
   VALID_EMAIL,
   EMAIL_IN_USE,
   INVALID_CREDENTIALS,
   USER_NOT_FOUND,
   CREATE_USER_INVALID,
-} = require("../utils/constants");
+} = require('../utils/constants');
 
 const createUser = (req, res, next) => {
   const { name, email, password } = req.body;
 
   User.findOne({ email })
-    .select("+password")
+    .select('+password')
     .then((user) => {
       if (!email) {
         return next(new InvalidError(VALID_EMAIL));
@@ -39,11 +39,11 @@ const createUser = (req, res, next) => {
 
     .catch((err) => {
       console.error(err);
-      if (err.name === `ValidationError`) {
+      if (err.name === 'ValidationError') {
         next(new InvalidError(CREATE_USER_INVALID));
-      } else if (err.message === "Enter a valid email") {
+      } else if (err.message === 'Enter a valid email') {
         next(new InvalidError(CREATE_USER_INVALID));
-      } else if (err.message === "Email is already in use") {
+      } else if (err.message === 'Email is already in use') {
         next(new ConflictError(EMAIL_IN_USE));
       } else {
         next(err);
@@ -62,16 +62,16 @@ const loginUser = (req, res, next) => {
     .then((user) => {
       const token = jwt.sign(
         { _id: user._id },
-        NODE_ENV === "production" ? JWT_SECRET : "dev-secret",
+        NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret',
         {
-          expiresIn: "7d",
+          expiresIn: '7d',
         },
       );
       res.send({ token });
     })
     .catch((err) => {
       console.error(err);
-      if (err.message === "Incorrect email or password") {
+      if (err.message === 'Incorrect email or password') {
         next(new UnauthorizedError(INVALID_CREDENTIALS));
       } else {
         next(err);

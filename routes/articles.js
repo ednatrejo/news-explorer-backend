@@ -1,17 +1,17 @@
-const router = require("express").Router();
-const { handleAuthorization } = require("../middlewares/auth");
+const router = require('express').Router();
+const { handleAuthorization } = require('../middlewares/auth');
 const {
   getArticles,
   addArticle,
   removeArticle,
-} = require("../controllers/articles");
+} = require('../controllers/articles');
 const {
   validateArticleBody,
   validateId,
-} = require("../middlewares/validation");
+} = require('../middlewares/validation');
 
-router.get("/", handleAuthorization, getArticles);
-router.post("/", handleAuthorization, validateArticleBody, addArticle);
-router.delete("/:articleId", handleAuthorization, validateId, removeArticle);
+router.get('/', handleAuthorization, getArticles);
+router.post('/', handleAuthorization, validateArticleBody, addArticle);
+router.delete('/:articleId', handleAuthorization, validateId, removeArticle);
 
 module.exports = router;

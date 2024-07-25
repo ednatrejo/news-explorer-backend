@@ -1,5 +1,5 @@
-const mongoose = require("mongoose");
-const validator = require("validator");
+const mongoose = require('mongoose');
+const validator = require('validator');
 
 const articleSchema = new mongoose.Schema({
   keyword: {
@@ -29,7 +29,7 @@ const articleSchema = new mongoose.Schema({
       validator(value) {
         return validator.isURL(value);
       },
-      message: "You must enter a valid URL",
+      message: 'You must enter a valid URL',
     },
   },
   image: {
@@ -39,14 +39,14 @@ const articleSchema = new mongoose.Schema({
       validator(value) {
         return validator.isURL(value);
       },
-      message: "You must enter a valid URL",
+      message: 'You must enter a valid URL',
     },
   },
   owner: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "user",
+    ref: 'user',
     required: true,
   },
 });
 
-module.exports = mongoose.model("article", articleSchema);
+module.exports = mongoose.model('article', articleSchema);

@@ -22,6 +22,6 @@ MongoDB database
 Mongoose ODM
 Postman
 Links
-The project can be seen live using the this [http://newsexplorer.chickenkiller.com/]
+The project can be seen live using the this [api.newsexplorer.chickenkiller.com]
 The project's backend can be found by using this [https://github.com/ednatrejo/news-explorer-backend.git]
 Images of Requests and Demo Server
